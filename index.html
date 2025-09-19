@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="mainBody">
+        <div class="calculator">
+            <div class="calculator-header">
+                <h3>Calculator</h3>
+            </div>
+            <div class="answer">
+                <input type="text" class="result" readonly>
+            </div>
+            <div class="allBtn">
+                <div class="button-row">
+                    <button class="Btn clear" onclick="delateMe()"><i class="fas fa-trash-alt"></i></button>
+                    <button class="Btn bracket" onclick="calcute('(')">(</button>
+                    <button class="Btn bracket" onclick="calcute(')')">)</button>
+                    <button class="Btn function" onclick="calcute('3.1416')">π</button>
+                </div>
+                <div class="button-row">
+                    <button class="Btn number" onclick="calcute('7')">7</button>
+                    <button class="Btn number" onclick="calcute('8')">8</button>
+                    <button class="Btn number" onclick="calcute('9')">9</button>
+                    <button class="Btn operator" onclick="calcute('+')"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="button-row">
+                    <button class="Btn number" onclick="calcute('4')">4</button>
+                    <button class="Btn number" onclick="calcute('5')">5</button>
+                    <button class="Btn number" onclick="calcute('6')">6</button>
+                    <button class="Btn operator" onclick="calcute('-')"><i class="fas fa-minus"></i></button>
+                </div>
+                <div class="button-row">
+                    <button class="Btn number" onclick="calcute('1')">1</button>
+                    <button class="Btn number" onclick="calcute('2')">2</button>
+                    <button class="Btn number" onclick="calcute('3')">3</button>
+                    <button class="Btn operator" onclick="calcute('*')"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="button-row">
+                    <button class="Btn number" onclick="calcute('0')">0</button>
+                    <button class="Btn number" onclick="calcute('.')">.</button>
+                    <button class="Btn operator" onclick="calcute('/')"><i class="fas fa-divide"></i></button>
+                    <button class="Btn equals" onclick="answer('=')"><i class="fas fa-equals"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var a = document.querySelector(".result");
+
+        function delateMe(){
+            a.value = "";
+            a.classList.add("shake");
+            setTimeout(() => {
+                a.classList.remove("shake");
+            }, 500);
+        }
+        
+        function calcute(event){
+            a.value += event;
+            a.classList.add("pulse");
+            setTimeout(() => {
+                a.classList.remove("pulse");
+            }, 300);
+        }
+        
+        function answer(){
+            try {
+                var b = eval(a.value);
+                a.value = b;
+                a.classList.add("success");
+                setTimeout(() => {
+                    a.classList.remove("success");
+                }, 1000);
+            } catch (error) {
+                a.value = "Error";
+                a.classList.add("error");
+                setTimeout(() => {
+                    a.value = "";
+                    a.classList.remove("error");
+                }, 1500);
+            }
+        }
+
+        // Add keyboard support
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9' || key === '.' || key === '+' || key === '-' || key === '*' || key === '/') {
+                calcute(key);
+            } else if (key === 'Enter' || key === '=') {
+                answer();
+            } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                delateMe();
+            }
+        });
+    </script>
+</body>
+</html>
